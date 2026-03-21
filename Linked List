@@ -1,0 +1,134 @@
+#include <iostream>
+using namespace std;
+struct Node
+{
+    int data;
+    Node* next;
+    Node* prev;
+};
+class DoublyLinkedList
+{
+private:
+    Node* head;
+    Node* tail;
+public:
+    DoublyLinkedList()
+    {
+        head = tail = NULL;
+    }
+    // Insert at beginning
+    void insertFirst(int val)
+    {
+        Node* newNode = new Node;
+        newNode->data = val;
+        newNode->next = head;
+        newNode->prev = NULL;
+        if (head == NULL)
+        {
+            head = tail = newNode;
+        }
+        else
+        {
+            head->prev = newNode;
+            head = newNode;
+        }
+    }
+    // Insert at end
+    void insertLast(int val)
+    {
+        Node* newNode = new Node;
+        newNode->data = val;
+        newNode->next = NULL;
+        newNode->prev = tail;
+        if (tail == NULL)
+        {
+            head = tail = newNode;
+        }
+        else
+        {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+    // Delete from beginning
+    void deleteFirst()
+    {
+        if (head == NULL)
+        {
+            cout << "List is empty\n";
+            return;
+        }
+        Node* temp = head;
+        head = head->next;
+        if (head != NULL)
+            head->prev = NULL;
+        else
+            tail = NULL;
+
+        delete temp;
+    }
+
+    // Delete from end
+    void deleteLast()
+    {
+        if (tail == NULL)
+        {
+            cout << "List is empty\n";
+            return;
+        }
+
+        Node* temp = tail;
+        tail = tail->prev;
+
+        if (tail != NULL)
+            tail->next = NULL;
+        else
+            head = NULL;
+
+        delete temp;
+    }
+
+    // Display forward
+    void displayForward()
+    {
+        Node* cur = head;
+        while (cur != NULL)
+        {
+            cout << cur->data << " ";
+            cur = cur->next;
+        }
+        cout << endl;
+    }
+
+    // Display backward
+    void displayBackward()
+    {
+        Node* cur = tail;
+        while (cur != NULL)
+        {
+            cout << cur->data << " ";
+            cur = cur->prev;
+        }
+        cout << endl;
+    }
+};
+
+int main()
+{
+    DoublyLinkedList list;
+
+    list.insertFirst(10);
+    list.insertFirst(5);
+    list.insertLast(20);
+    list.insertLast(30);
+
+    list.displayForward();   // 5 10 20 30
+    list.displayBackward();  // 30 20 10 5
+
+    list.deleteFirst();
+    list.deleteLast();
+
+    list.displayForward();   // 10 20
+
+    return 0;
+}
