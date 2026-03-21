@@ -105,4 +105,5 @@ int main()
     s.pop();
     s.display();
     cout << s.peek();
+    return 0;
 }
