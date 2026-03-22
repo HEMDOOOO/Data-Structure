@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+struct Node 
+{
+    int value;
+    Node* next;
+};
+class Queue 
+{
+private:
+    Node* head = NULL;
+    Node* tail = NULL;
+public:
+    void enqueue(int val) 
+    {
+        Node* newNode = new Node();
+        newNode->value = val;
+        newNode->next = NULL;
+        if (isEmpty()) 
+        {
+            head = tail = newNode;
+        } 
+        else 
+        {
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    void dequeue()
+    {
+        if (isEmpty()) return;
+        head = head->next;
+        if (head == NULL) tail = NULL;
+    }
+
+    int frontValue()
+    {
+        if (isEmpty()) return -1;
+        return head->value;
+    }
+    bool isEmpty()
+    {
+        return head == NULL;
+    }
+    void display()
+    {
+        Node* curr = head;
+        while (curr != NULL)
+        {
+            cout << curr->value << " ";
+            curr = curr->next;
+        }
+        cout << endl;
+    }
+};
+int main() 
+{
+    Queue q;
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.display();
+    q.dequeue();
+    q.display(); 
+    q.enqueue(40);
+    q.display();
+    return 0;
+}
